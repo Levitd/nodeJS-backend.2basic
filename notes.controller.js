@@ -32,9 +32,22 @@ async function removeNote(id){
     await fs.writeFile(notesPath,  JSON.stringify((newNotes)))
     console.log(chalk.bgGreen('Note removed'))
 }
+async function updateNote(id,title){
+    const notes=getNotes()
+    const newNotes=(await notes).map((note)=>{
+        if (note.id===id) {
+            return {id,title}
+        } else {
+            return note
+        }
+    })
+    await fs.writeFile(notesPath,  JSON.stringify((newNotes)))
+    console.log(chalk.bgGreen('Note update'))
+}
 
 module.exports ={
     addNotes,
-    printNotes,
-    removeNote
+    getNotes,
+    removeNote,
+    updateNote
 }
